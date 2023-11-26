@@ -25,8 +25,8 @@ public class cifradorVisual extends javax.swing.JFrame {
      * Creates new form cifradorVisual
      */
     public cifradorVisual() throws RemoteException {
-        this.server = new CifradoRMIServidor();
         this.client = new CifradoRMICliente();
+        this.server = new CifradoRMIServidor();
         initComponents();
     }
 
@@ -271,7 +271,7 @@ public class cifradorVisual extends javax.swing.JFrame {
     private void btnServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServerActionPerformed
         String Ip=JOptionPane.showInputDialog(rootPane, "Escribe tu ip", "Servidor", HEIGHT);
         System.out.println(Ip);
-        server.connect(Ip);
+        server.connect(Ip, server);
         
         txtLogs.append("Se ha conectado al servidor \n");
         
@@ -281,8 +281,8 @@ public class cifradorVisual extends javax.swing.JFrame {
         System.out.println(server.clientes.size());
 
         String Ip=JOptionPane.showInputDialog(rootPane, "Escribe la ip del servidor", "Cliente", HEIGHT);
-        client=new CifradoRMICliente();
         client.connect(Ip);
+       
         txtLogs.append("Se ha conectado al servidor \n");
         System.out.println(server.clientes.size());
     }//GEN-LAST:event_btnClientActionPerformed

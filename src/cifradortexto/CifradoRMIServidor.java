@@ -47,15 +47,16 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
 
 
     
-    public void connect(String Ip) {
+    public void connect(String Ip, CifradoRMIServidor server) {
         try {
-            CifradoRMI service = new CifradoRMIServidor();
-
             LocateRegistry.createRegistry(9000);
+
+            CifradoRMI service = server;
+
 
             java.rmi.Naming.rebind("rmi://" + Ip + ":9000/CifradoRMI", service);
 
-            System.out.println("Servidor de chat RMI listo.");
+            System.out.println("Servidor de RMI listo.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,13 +76,13 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
 }
 
 
-//    @Override
+
+}
+
+    //    @Override
 //    public void unregisterClient(int clienteId) {
 //        CifradoRMI cliente = clientes.remove(clienteId);
 //        if (cliente != null) {
 //            System.out.println("Cliente retirado: " + cliente.toString() + " - ID: " + clienteId);
 //        }
 //    }
-}
-
-    

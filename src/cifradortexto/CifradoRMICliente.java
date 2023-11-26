@@ -10,18 +10,17 @@ import java.rmi.RemoteException;
 
 
 public class CifradoRMICliente {
-        CifradoRMI cliente;
+        CifradoRMI service;
     
 
     public void connect(String ip) {
         try {
             // Busca el objeto remoto
 
-            cliente = (CifradoRMI) Naming.lookup("//" + ip + ":9000/CifradoRMI");
+            service = (CifradoRMI) Naming.lookup("rmi://" + ip + ":9000/CifradoRMI");
 
             ClientCallbackImpl clientCallback = new ClientCallbackImpl();
-            cliente.registerClient(clientCallback);
-
+            service.registerClient(clientCallback);
 
         } catch (Exception e) {
             e.printStackTrace();
