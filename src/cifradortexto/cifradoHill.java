@@ -31,6 +31,8 @@ public class cifradoHill {
     int numCifrado=1;
     
     int numHilos = 8; //hasta 8 hilos 
+    
+    CifradoRMIServidor server;
 
     
     public void arraySecuencial(String[] texto, ArrayList<String> palabrasSec ){
@@ -110,7 +112,26 @@ public class cifradoHill {
         }
     }
 }
+  
+ public void cifrarConHilosClientes(CifradoRMIServidor server) throws IOException {
+     
     
+    int totPalabras = contadorPalabras.contarPalabras(nombreArchivo, palabrasSec);
+    System.out.println("Número de palabras (con hilos): " + totPalabras);
+
+    String[] texto = new String[palabrasSec.size()];
+    arraySecuencial(texto, palabrasSec);
+    
+
+    String[] textosCifrados = new String[palabrasSec.size()];
+    
+     System.out.println(server.clientes.size());
+    server.cifrarPorHilos(texto);
+    
+    
+
+}
+ 
 public void cifrarConHilos() throws IOException {
     long tiempoInicioConHilos = System.currentTimeMillis();
 
