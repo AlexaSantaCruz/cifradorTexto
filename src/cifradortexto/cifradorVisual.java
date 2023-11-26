@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class cifradorVisual extends javax.swing.JFrame {
     CifradoRMIServidor server;
     CifradoRMICliente client;
+    CifradoRMI service;
 
     String resetRoute="C:/Users/Alexa/Documents/NetBeansProjects/CifradorTexto/src/cifradortexto/";
 
@@ -271,7 +272,7 @@ public class cifradorVisual extends javax.swing.JFrame {
     private void btnServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServerActionPerformed
         String Ip=JOptionPane.showInputDialog(rootPane, "Escribe tu ip", "Servidor", HEIGHT);
         System.out.println(Ip);
-        server.connect(Ip, server);
+        service=server.connect(Ip, server);
         
         txtLogs.append("Se ha conectado al servidor \n");
         
@@ -279,9 +280,10 @@ public class cifradorVisual extends javax.swing.JFrame {
 
     private void btnClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientActionPerformed
         System.out.println(server.clientes.size());
+        client = new CifradoRMICliente();
 
         String Ip=JOptionPane.showInputDialog(rootPane, "Escribe la ip del servidor", "Cliente", HEIGHT);
-        client.connect(Ip);
+        client.connect(Ip, service);
        
         txtLogs.append("Se ha conectado al servidor \n");
         System.out.println(server.clientes.size());
@@ -289,6 +291,7 @@ public class cifradorVisual extends javax.swing.JFrame {
 
     private void btnIniciarPorRMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarPorRMIActionPerformed
 
+        System.out.println(server.clientes.size());
         cifradoHill cifradoHill=new cifradoHill();
         if(esNumeroEntero(txtCantidad.getText().toString())){
             borrarCrearResultado();
