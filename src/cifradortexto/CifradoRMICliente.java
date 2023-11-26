@@ -10,10 +10,9 @@ import java.rmi.RemoteException;
 
 
 public class CifradoRMICliente {
-        CifradoRMI service;
     
 
-    public void connect(String ip) {
+    public void connect(String ip, CifradoRMI service) {
         try {
             // Busca el objeto remoto
 

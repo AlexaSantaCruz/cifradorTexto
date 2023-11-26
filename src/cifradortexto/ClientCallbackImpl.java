@@ -6,6 +6,7 @@ package cifradortexto;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
@@ -18,9 +19,9 @@ public class ClientCallbackImpl extends UnicastRemoteObject implements ClientCal
 
     @Override
     public void receiveMessage(String[] message) throws RemoteException {
-        for (int i = 0; i < message.length; i++) {
-            System.out.println(message[i]);
-        }
+
+        System.out.println("Texto recibido: " + Arrays.toString(message));
+
         
         
     }

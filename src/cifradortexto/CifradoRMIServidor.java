@@ -39,6 +39,16 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
     System.out.println("Palabras por cliente: " + palabrasPorCliente);
     System.out.println("Palabras restantes: " + palabrasRestantes);
 
+    for (int i = 0; i < numClientes; i++) {
+            int fin = inicio + palabrasPorCliente + (i < palabrasRestantes ? 1 : 0);
+            String[] parteTexto = Arrays.copyOfRange(texto, inicio, fin);
+
+            // Aquí deberías llamar a un método remoto en el cliente para enviar la parte del texto
+
+            clientes.get(i+1).receiveMessage(parteTexto);
+
+            inicio = fin;
+        }
 
     long tiempoFinConHilos = System.currentTimeMillis();
     long tiempoTotalConHilos = tiempoFinConHilos - tiempoInicioConHilos;
@@ -47,7 +57,7 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
 
 
     
-    public void connect(String Ip, CifradoRMIServidor server) {
+    public CifradoRMI connect(String Ip, CifradoRMIServidor server) {
         try {
             LocateRegistry.createRegistry(9000);
 
@@ -57,10 +67,12 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
             java.rmi.Naming.rebind("rmi://" + Ip + ":9000/CifradoRMI", service);
 
             System.out.println("Servidor de RMI listo.");
+            return service;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
 @Override
