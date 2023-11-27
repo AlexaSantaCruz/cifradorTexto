@@ -7,6 +7,7 @@ package cifradortexto;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,7 +29,7 @@ public class cifradoHill {
     ContadorDePalabras contadorPalabras=new ContadorDePalabras();
     String nombreArchivo = "C:/Users/Alexa/Documents/NetBeansProjects/CifradorTexto/src/cifradortexto/"; // Nombre del archivo a leer
     ContadorDePalabrasHilos contadorHilos=new ContadorDePalabrasHilos();
-    int numCifrado=1;
+    int numCifrado=10000;
     
     int numHilos = 8; //hasta 8 hilos 
     
@@ -131,6 +132,38 @@ public class cifradoHill {
     
 
 }
+ 
+  public String[] cifrarConHilosClientesFinal(String[] textoACifrar, int numPalabras) throws IOException {
+    System.out.println("Número de palabras (Clientes): " + numPalabras);
+
+    String[] texto = new String[numPalabras];
+    arrayCopySecuencial(texto, textoACifrar);
+
+    String[] textosCifrados = new String[numPalabras];
+
+    //int numHilos = Runtime.getRuntime().availableProcessors(); // Usar el número de núcleos disponibles
+
+    ExecutorService executorService = Executors.newFixedThreadPool(numHilos);
+
+    int batchSize = numPalabras / numHilos;
+
+    for (int i = 0; i < numHilos; i++) {
+        int startIndex = i * batchSize;
+        int endIndex = (i == numHilos - 1) ? numPalabras : (i + 1) * batchSize;
+
+        executorService.submit(new CifradoRunnable(texto, textosCifrados, startIndex, endIndex));
+    }
+
+    executorService.shutdown();
+
+    try {
+        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+      
+      return textosCifrados;
+  }
  
 public void cifrarConHilos() throws IOException {
     long tiempoInicioConHilos = System.currentTimeMillis();

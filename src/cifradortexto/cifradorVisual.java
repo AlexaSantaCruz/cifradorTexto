@@ -290,8 +290,6 @@ public class cifradorVisual extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientActionPerformed
 
     private void btnIniciarPorRMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarPorRMIActionPerformed
-
-        System.out.println(server.clientes.size());
         cifradoHill cifradoHill=new cifradoHill();
         if(esNumeroEntero(txtCantidad.getText().toString())){
             borrarCrearResultado();
@@ -313,13 +311,12 @@ public class cifradorVisual extends javax.swing.JFrame {
                 
         try {
                 long tiempoInicioConHilos = System.currentTimeMillis();
-
-                
                 
                 cifradoHill.cifrarConHilosClientes(server);
+                
                 long tiempoFinConHilos = System.currentTimeMillis();
                 long tiempoTotalConHilos = tiempoFinConHilos - tiempoInicioConHilos;
-                JOptionPane.showMessageDialog(this, "Tiempo de ejecución (concurrente): " + tiempoTotalConHilos + " ms");
+                JOptionPane.showMessageDialog(this, "Tiempo de ejecución (RMI): " + tiempoTotalConHilos + " ms");
 
                 txtLogs.append("\nTiempo de ejecución (concurrente): " + tiempoTotalConHilos + " ms\n");
                 

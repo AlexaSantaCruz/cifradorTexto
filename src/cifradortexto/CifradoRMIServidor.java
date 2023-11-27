@@ -28,7 +28,6 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
     
         System.out.println(clientes.size());
 
-    long tiempoInicioConHilos = System.currentTimeMillis();
     int numClientes = clientes.size();
 
     int palabrasPorCliente = texto.length / numClientes;
@@ -43,16 +42,12 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
             int fin = inicio + palabrasPorCliente + (i < palabrasRestantes ? 1 : 0);
             String[] parteTexto = Arrays.copyOfRange(texto, inicio, fin);
 
-            // Aquí deberías llamar a un método remoto en el cliente para enviar la parte del texto
-
             clientes.get(i+1).receiveMessage(parteTexto);
 
             inicio = fin;
         }
 
-    long tiempoFinConHilos = System.currentTimeMillis();
-    long tiempoTotalConHilos = tiempoFinConHilos - tiempoInicioConHilos;
-    System.out.println("Tiempo de ejecución (con hilos): " + tiempoTotalConHilos + " ms");
+
 }
 
 
