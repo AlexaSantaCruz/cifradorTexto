@@ -72,9 +72,7 @@ public class cifradoHill {
             arrayCopySecuencial(texto, textCopy);
          //   System.out.println("Cifrado"+ i);
         }
-               long tiempoFinSecuencial = System.currentTimeMillis();
-        long tiempoTotalSecuencial = tiempoFinSecuencial - tiempoInicioSecuencial;
-        System.out.println("Tiempo de ejecución (secuencial): " + tiempoTotalSecuencial + " ms");
+ 
           
         
         int count=0;
@@ -85,6 +83,9 @@ public class cifradoHill {
                escribirArchivo("\n");
            }
         }
+        long tiempoFinSecuencial = System.currentTimeMillis();
+        long tiempoTotalSecuencial = tiempoFinSecuencial - tiempoInicioSecuencial;
+        System.out.println("Tiempo de ejecución (secuencial): " + tiempoTotalSecuencial + " ms");
         
                 
     }
@@ -197,9 +198,7 @@ public void cifrarConHilos() throws IOException {
         e.printStackTrace();
     }
 
-    long tiempoFinConHilos = System.currentTimeMillis();
-    long tiempoTotalConHilos = tiempoFinConHilos - tiempoInicioConHilos;
-    System.out.println("Tiempo de ejecución (con hilos): " + tiempoTotalConHilos + " ms");
+
 
     int count = 0;
     for (int i = 0; i < textosCifrados.length; i++) {
@@ -209,6 +208,10 @@ public void cifrarConHilos() throws IOException {
             escribirArchivo("\n");
         }
     }
+    long tiempoFinConHilos = System.currentTimeMillis();
+    long tiempoTotalConHilos = tiempoFinConHilos - tiempoInicioConHilos;
+    System.out.println("Tiempo de ejecución (con hilos): " + tiempoTotalConHilos + " ms");
+    
 }
     
     public void escribirArchivo(String textCopy){

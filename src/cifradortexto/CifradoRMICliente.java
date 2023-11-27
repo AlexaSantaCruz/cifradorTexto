@@ -26,11 +26,7 @@ public class CifradoRMICliente {
         }
     }
     
-    public void cifrarPorHilos(String[] subArray) throws RemoteException {
-    // Implementa aquí la lógica para cifrar el subarray recibido
-    // Puedes imprimirlo en la consola o realizar cualquier otra operación
-    System.out.println("Subarray recibido: " + Arrays.toString(subArray));
-}
+
 
 }
 

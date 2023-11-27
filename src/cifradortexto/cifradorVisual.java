@@ -318,7 +318,7 @@ public class cifradorVisual extends javax.swing.JFrame {
                 long tiempoTotalConHilos = tiempoFinConHilos - tiempoInicioConHilos;
                 JOptionPane.showMessageDialog(this, "Tiempo de ejecución (RMI): " + tiempoTotalConHilos + " ms");
 
-                txtLogs.append("\nTiempo de ejecución (concurrente): " + tiempoTotalConHilos + " ms\n");
+                txtLogs.append("\nTiempo de ejecución (RMI): " + tiempoTotalConHilos + " ms\n");
                 
                 
             } catch (IOException ex) {

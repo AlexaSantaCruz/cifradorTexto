@@ -7,11 +7,14 @@ package cifradortexto;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CifradoRMIServidor extends UnicastRemoteObject implements CifradoRMI {
+    public Map<Integer, String[]> resultadosClientes = new HashMap<>();
     public Map<Integer, ClientCallback> clientes;
     private cifradoHill hill;
     private int contadorClientes;
@@ -42,7 +45,7 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
             int fin = inicio + palabrasPorCliente + (i < palabrasRestantes ? 1 : 0);
             String[] parteTexto = Arrays.copyOfRange(texto, inicio, fin);
 
-            clientes.get(i+1).receiveMessage(parteTexto);
+            clientes.get(i+1).receiveMessage(parteTexto, this, i);
 
             inicio = fin;
         }
@@ -81,6 +84,38 @@ public void cifrarPorHilos(String[] texto) throws RemoteException {
     System.out.println("Cliente registrado: " + cliente.toString() + " - ID: " + contadorClientes);
     
 }
+    
+    @Override
+    public void sendResult(String[] resultado, int clientId) {
+        resultadosClientes.put(clientId, resultado);
+
+        // Verifica si todos los clientes han enviado sus resultados
+        if (resultadosClientes.size() == clientes.size()) {
+            ArrayList<String> finalTextList = new ArrayList<>();
+
+            // Procesa los resultados en el orden correcto
+            for (int i = 0; i <= clientes.size()-1; i++) {
+                String[] resultadoCliente = resultadosClientes.get(i);
+                // Agrega los elementos del resultado del cliente a la lista
+                Collections.addAll(finalTextList, resultadoCliente);
+                // Procesa el resultado como desees
+                System.out.println("Resultado del Cliente " + i + ": " + Arrays.toString(resultadoCliente));
+            }
+
+            // Convierte la lista a un array
+            String[] finalText = finalTextList.toArray(new String[0]);
+
+            int count = 0;
+    
+            for (int i = 0; i < finalText.length; i++) {
+                hill.escribirArchivo(finalText[i]);
+                count++;
+                if (count % 10 == 0) {
+                    hill.escribirArchivo("\n");
+                }
+            }
+        }
+    }
 
 
 
